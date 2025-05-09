@@ -43,6 +43,8 @@ class LinkedList:
         return dummy.next
     
     def concatenate(self, other):
+        if not (self._is_sorted(self) and self._is_sorted(other)):
+            raise ValueError("Both lists must be sorted before concatenation.")
         if self.head is None:
             self.head = other.head
             return
@@ -50,6 +52,15 @@ class LinkedList:
         while cur.next:
             cur = cur.next
         cur.next = other.head
+        self.sort_with_insertion()
+
+    def _is_sorted(self, list):
+        current = list.head if list else self.head
+        while current and current.next:
+            if current.data > current.next.data:
+                return False
+            current = current.next
+        return True
 
     def print_list(self):
         current = self.head
@@ -68,10 +79,10 @@ linked_list_a.insert_at_end(55)
 linked_list_b = LinkedList()
 linked_list_b.insert_at_end(20)
 linked_list_b.insert_at_end(30)
-linked_list_b.insert_at_end(40)
 linked_list_b.insert_at_end(50)
-linked_list_b.insert_at_end(60)
+linked_list_b.insert_at_end(40)
 linked_list_b.insert_at_end(70)
+linked_list_b.insert_at_end(60)
 
 linked_list_a.reverse()
 print("Reversed linked list A:")
@@ -81,6 +92,11 @@ linked_list_a.sort_with_insertion()
 print("Sorted linked list A:")
 linked_list_a.print_list()
 
+linked_list_b.sort_with_insertion()
+print("Sorted linked list B:")
+linked_list_a.print_list()
+
 linked_list_a.concatenate(linked_list_b)
 print("Linked list A concatenated with linked list B:")
 linked_list_a.print_list()
+
