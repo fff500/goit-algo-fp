@@ -1,6 +1,7 @@
 import turtle
 import math
 
+
 def draw_tree(t, length, depth):
     if depth > 0:
         t.forward(length)
